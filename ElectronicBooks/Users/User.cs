@@ -11,5 +11,6 @@ namespace ElectronicBooks.Users
         public Guid UserId { get; set; }
         public String Name { get; set; }
         public String LastName { get; set; }
+        public List<CatalogBook> BorrowedBooks = new List<CatalogBook>();
     }
 }

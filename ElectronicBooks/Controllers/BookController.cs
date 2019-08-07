@@ -2,7 +2,10 @@
 using ElectronicBooks.Operations;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace ElectronicBooks.Controllers
@@ -12,17 +15,16 @@ namespace ElectronicBooks.Controllers
         [HttpGet]
         public ActionResult ListOfBooks()
         {
-            string xmlInputData = string.Empty;
-
-            string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-            path = path.Substring(6);
-            path = path + @"\books.xml";
-
-            xmlInputData = System.IO.File.ReadAllText(path);
-
-            Catalog ct = Serialization.Deserialize<Catalog>(xmlInputData);
+            Catalog ct = Serialization.Deserialize<Catalog>(FetchBookXmlStringFromFile());
             List<CatalogBook> listOfBooks = new List<CatalogBook>((CatalogBook[])ct.ArrayOfBooks);
             return View(listOfBooks);
+        }
+        public string FetchBookXmlStringFromFile()
+        {
+            string xmlString = string.Empty;
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load(Server.MapPath("~/XML/books.xml"));
+            return xmlString = xmldoc.InnerXml;
         }
 
     }

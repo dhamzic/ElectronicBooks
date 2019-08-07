@@ -1,5 +1,9 @@
-﻿using System;
+﻿using ElectronicBooks.Users;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using System.Xml;
 using System.Xml.Serialization;
 
 
@@ -33,6 +37,8 @@ public class CatalogBook
 
 
     [System.Xml.Serialization.XmlElementAttribute(DataType = "date", ElementName = "publish_date")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd. MM. yyyy.}")]
+    [Display(Name = "Publish Date")]
     public System.DateTime PublishDate { get; set; }
 
     [System.Xml.Serialization.XmlElementAttribute("description")]

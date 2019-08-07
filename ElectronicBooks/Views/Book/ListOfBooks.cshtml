@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "ListOfBooks";
 }
-<table class="table">
+<table class="table table-bordered table-responsive table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model[0].Author)
@@ -19,13 +19,15 @@
         <th>
             @Html.DisplayNameFor(model => model[0].Price)
         </th>
-        <th>
+        <th class="publishDateColumn">
             @Html.DisplayNameFor(model => model[0].PublishDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].Description)
         </th>
-        <th></th>
+        <th>
+            Action
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -51,8 +53,12 @@
             </td>
             <td>
                 @Html.ActionLink("Borrow ", "Borrow ", new { id = item.Id })
+                @Html.ActionLink("Return ", "Return ", new { id = item.Id })
             </td>
+
         </tr>
     }
 
 </table>
+
+
