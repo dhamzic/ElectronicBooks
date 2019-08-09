@@ -2,63 +2,64 @@
 
 
 
-@{
-    ViewBag.Title = "ListOfBooks";
-}
-<table class="table table-bordered table-responsive table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model[0].Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].Price)
-        </th>
-        <th class="publishDateColumn">
-            @Html.DisplayNameFor(model => model[0].PublishDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].Description)
-        </th>
-        <th>
-            Action
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Borrow ", "Borrow ", new { id = item.Id })
-                @Html.ActionLink("Return ", "Return ", new { id = item.Id })
-            </td>
-
-        </tr>
+    @{
+        ViewBag.Title = "ListOfBooks";
     }
+    <br />
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Price)
+            </th>
+            <th class="publishDateColumn">
+                @Html.DisplayNameFor(model => model[0].PublishDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Description)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Borrow ", "Borrow ", new { id = item.Id })
+                    @Html.ActionLink("Return ", "Return ", new { id = item.Id })
+                </td>
+
+            </tr>
+        }
+
+    </table>
 
 

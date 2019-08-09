@@ -47,5 +47,6 @@ public class CatalogBook
 
     [System.Xml.Serialization.XmlAttributeAttribute("id")]
     public string Id { get; set; }
+    public User UserWhoBorrowedBook { get; set; }
 
 }

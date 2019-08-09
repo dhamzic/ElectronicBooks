@@ -12,12 +12,23 @@ namespace ElectronicBooks.Controllers
 {
     public class BookController : Controller
     {
+        private List<CatalogBook> listOfBooks = new List<CatalogBook>();
+
         [HttpGet]
         public ActionResult ListOfBooks()
         {
-            Catalog ct = Serialization.Deserialize<Catalog>(FetchBookXmlStringFromFile());
-            List<CatalogBook> listOfBooks = new List<CatalogBook>((CatalogBook[])ct.ArrayOfBooks);
-            return View(listOfBooks);
+            //Check if Session exists, if the session does not exists, create it and fill it with data. If Exists, do not fill it, just return its object.
+   
+            if (Session["listOfBooksObject"] == null)
+            {
+                Catalog ct = Serialization.Deserialize<Catalog>(FetchBookXmlStringFromFile());
+                listOfBooks = new List<CatalogBook>((CatalogBook[])ct.ArrayOfBooks);
+                Session["listOfBooksObject"] = listOfBooks;
+            }
+            return View((List<CatalogBook>)Session["listOfBooksObject"]);
+
+
+
         }
         public string FetchBookXmlStringFromFile()
         {
