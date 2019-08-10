@@ -1,0 +1,67 @@
+﻿@model ElectronicBooks.Views.Book.ResponseMessageAfterBorrowingBook
+
+@{
+    ViewBag.Title = "Borrow";
+}
+
+<h2 style="color:firebrick">@Html.DisplayFor(model => model.ResponseMessage)</h2>
+
+<div>
+    <hr />
+    <p>Book information</p>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BookInformation.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookInformation.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BookInformation.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookInformation.Author)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BookInformation.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookInformation.Price)
+        </dd>
+    </dl>
+    <hr />
+    <p>User information</p>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Country)
+        </dd>
+
+    </dl>
+    <hr />
+
+</div>
+<br />
+<p>
+    @Html.ActionLink("Back to List", "ListOfBooks")
+</p>

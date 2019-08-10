@@ -18,6 +18,12 @@ namespace ElectronicBooks
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "User", action = "LogInView", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Book",
+                url: "{Book}/{Borrow}/{bookId}",
+                defaults: new { controller = "Book", action = "Borrow", bookId = "" }
+            );
         }
     }
 }
