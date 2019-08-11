@@ -1,0 +1,10 @@
+﻿@model ElectronicBooks.Views.Book.ResponseMessageAfterBookOp
+@{
+    ViewBag.Title = "Return";
+}
+<h2 style="color:firebrick">@Html.DisplayFor(model => model.ResponseMessage)</h2>
+<br />
+<p>
+    @Html.ActionLink("Back to List", "ListOfBooks")
+</p>
+

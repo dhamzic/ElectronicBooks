@@ -21,8 +21,13 @@ namespace ElectronicBooks.Controllers
         [HttpGet]
         public ActionResult ListOfBooks()
         {
-            //Check if Session exists, if the session does not exists, create it and fill it with data. If Exists, do not fill it, just return its object.
+            ///Check if User exists, if a user doesn't exist, redirect page to log in page.
+            if (Session["UserList"] == null)
+            {
+                return RedirectToAction("LogInView", "User");
+            }
 
+            ///Check if Session exists, if the session does not exist, create it and fill it with data. If Exist, do not fill it, just return its object.
             if (Session["listOfBooksObject"] == null)
             {
                 Catalog ct = Serialization.Deserialize<Catalog>(FetchBookXmlStringFromFile());
@@ -33,8 +38,61 @@ namespace ElectronicBooks.Controllers
         }
 
         [HttpGet]
+        public ActionResult Return(string bookId)
+        {
+            ///Check if User exists, if a user doesn't exist, redirect page to log in page.
+            if (Session["UserList"] == null)
+            {
+                return RedirectToAction("LogInView", "User");
+            }
+
+            User currentUser = (User)Session["CurrentActiveUser"];
+            listOfBooks = (List<CatalogBook>)Session["listOfBooksObject"];
+            CatalogBook selectedBook = listOfBooks.Where(w => w.Id == bookId).FirstOrDefault();
+
+            ///Response message
+            ResponseMessageAfterBookOp rmabo = new ResponseMessageAfterBookOp()
+            {
+                User = currentUser,
+                BookInformation = selectedBook
+            };
+
+
+            if (selectedBook.UserWhoBorrowedBook != null)
+            {
+                if (selectedBook.UserWhoBorrowedBook.UserId == currentUser.UserId)
+                {
+
+                    listOfBooks.Where(w => w.Id == bookId).ToList().ForEach(s => s.UserWhoBorrowedBook = null);
+                    Session["listOfBooksObject"] = listOfBooks;
+                    rmabo.ResponseMessage = "You have successfully returned the book.";
+                }
+                else
+                {
+                    rmabo.ResponseMessage = "You can not return a book which you did not borrow.";
+                }
+            }
+            else
+            {
+                rmabo.ResponseMessage = "You can not return a book which is not borrowed.";
+            }
+            return View(rmabo);
+        }
+
+
+
+
+
+
+        [HttpGet]
         public ActionResult Borrow(string bookId)
         {
+            ///Check if User exists, if a user doesn't exist, redirect page to log in page.
+            if (Session["UserList"] == null)
+            {
+                return RedirectToAction("LogInView", "User");
+            }
+
             User currentUser = (User)Session["CurrentActiveUser"];
 
             listOfBooks = (List<CatalogBook>)Session["listOfBooksObject"];
@@ -47,17 +105,17 @@ namespace ElectronicBooks.Controllers
                 Session["listOfBooksObject"] = listOfBooks;
 
 
-                ResponseMessageAfterBorrowingBook rmabb = new ResponseMessageAfterBorrowingBook()
+                ResponseMessageAfterBookOp rmabo = new ResponseMessageAfterBookOp()
                 {
                     User = currentUser,
                     ResponseMessage = "You have successfully borrowed the book.",
                     BookInformation = selectedBook
                 };
-                return View(rmabb);
+                return View(rmabo);
             }
-            else if (currentUser.UserId==userThatBorrowedBook.UserId)
+            else if (currentUser.UserId == userThatBorrowedBook.UserId)
             {
-                ResponseMessageAfterBorrowingBook rmabb = new ResponseMessageAfterBorrowingBook()
+                ResponseMessageAfterBookOp rmabb = new ResponseMessageAfterBookOp()
                 {
                     User = currentUser,
                     ResponseMessage = "You have already borrowed this book.",
@@ -67,7 +125,7 @@ namespace ElectronicBooks.Controllers
             }
             else
             {
-                ResponseMessageAfterBorrowingBook rmabb = new ResponseMessageAfterBorrowingBook()
+                ResponseMessageAfterBookOp rmabb = new ResponseMessageAfterBookOp()
                 {
                     User = userThatBorrowedBook,
                     ResponseMessage = "Currently, you can not borrow this book because the selected book is already borrowed.",
@@ -85,6 +143,7 @@ namespace ElectronicBooks.Controllers
             xmldoc.Load(Server.MapPath("~/XML/books.xml"));
             return xmlString = xmldoc.InnerXml;
         }
+
 
     }
 }

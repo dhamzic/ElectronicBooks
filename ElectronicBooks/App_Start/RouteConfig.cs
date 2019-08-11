@@ -20,9 +20,15 @@ namespace ElectronicBooks
             );
 
             routes.MapRoute(
-                name: "Book",
+                name: "BookBorrow",
                 url: "{Book}/{Borrow}/{bookId}",
                 defaults: new { controller = "Book", action = "Borrow", bookId = "" }
+            );
+
+            routes.MapRoute(
+                name: "BookReturn",
+                url: "{Book}/{Return}/{bookId}",
+                defaults: new { controller = "Book", action = "Return", bookId = "" }
             );
         }
     }

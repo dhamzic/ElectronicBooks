@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ElectronicBooks.Views.Book
 {
-    public class ResponseMessageAfterBorrowingBook
+    public class ResponseMessageAfterBookOp
     {
         public User User { get; set; }
         public String ResponseMessage { get; set; }

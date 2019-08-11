@@ -26,3 +26,6 @@ textarea {
 .publishDateColumn {
     width: 9%;
 }
+.pointer {
+    cursor: pointer;
+}
